@@ -53,7 +53,8 @@ class Product {
     public function delete($id){
         try{
             $stmt = $this->conn->prepare("DELETE FROM product WHERE id = :id");
-            $stmt->bindparam($id);
+            $stmt->bindparam(":id", $id);
+            $stmt->execute();
             return $stmt;
         }catch(PDOException $e){
             echo $e->getMessage();

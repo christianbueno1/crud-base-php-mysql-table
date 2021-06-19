@@ -4,7 +4,7 @@ ini_set('display_errors',1);
 ini_set('display_startup_erros',1);
 error_reporting(E_ALL);
 
-require_once 'clases/product.php';
+require_once 'classes/product.php';
 $objProduct = new Product();
 
 // GET
@@ -12,6 +12,7 @@ if(isset($_GET['edit_id'])){
     $id = $_GET['edit_id'];
     $stmt = $objProduct->runQuery('SELECT * FROM product WHERE id = :id');
     $stmt->execute(array(":id" => $id));
+    // campos de la base de datos
     $rowProduct = $stmt->fetch(PDO::FETCH_ASSOC);
 }else{
     $id = null;
@@ -64,19 +65,19 @@ if( isset($_POST['btn_save']) ) {
                   <form  method="post">
                     <div class="form-group">
                         <label for="id">ID</label>
-                        <input class="form-control" type="text" name="id" id="id" value="" readonly>
+                        <input class="form-control" type="text" name="id" id="id" value='<?php isset($rowProduct) ? print($rowProduct['id']) : ""; ?>' readonly>
                     </div>
                     <div class="form-group">
                         <label for="product">Producto *</label>
-                        <input  class="form-control" type="text" name="product" id="product" placeholder="Ingrese el nuevo producto" value="<?php print($rowProduct['product']); ?>" required maxlength="100">
+                        <input  class="form-control" type="text" name="product" id="product" placeholder="Ingrese el nuevo producto" value='<?php isset($rowProduct) ? print($rowProduct['product']) : ""; ?>' required maxlength="400">
                     </div>
                     <div class="form-group">
                         <label for="price">Precio $</label>
-                        <input  class="form-control" type="text" name="price" id="price" placeholder="1234.56" value="<?php print($rowProduct['price']); ?>" required maxlength="100">
+                        <input  class="form-control" type="text" name="price" id="price" placeholder="1234.56" value='<?php isset($rowProduct) ? print($rowProduct['price']) : "" ; ?>' required maxlength="100">
                     </div>
                     <div class="form-group">
                         <label for="attribute">Atributo</label>
-                        <input  class="form-control" type="text" name="attribute" id="attribute" placeholder='{"color":"azul","talla":"m","marca":"apple"}' value="<?php print($rowProduct['attribute']); ?>" required maxlength="100">
+                        <input  class="form-control" type="text" name="attribute" id="attribute" placeholder='{"color":"azul","talla":"m","marca":"apple"}' value='<?php isset( $rowProduct ) ? print($rowProduct['attribute']) : ""; ?>' required maxlength="300">
                     </div>
                     <input class="btn btn-primary mb-2" type="submit" name="btn_save" value="Guardar">                    
                   </form>

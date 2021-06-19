@@ -4,7 +4,7 @@ ini_set('display_errors',1);
 ini_set('display_startup_erros',1);
 error_reporting(E_ALL);
 
-require_once 'clases/product.php';
+require_once 'classes/product.php';
 
 $objProduct = new Product();
 
@@ -43,9 +43,38 @@ if( isset($_GET['delete_id']) ){
                 <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
                     <h1 style="margin-top: 10px">DataTable - Productos</h1>
                     <?php
-
+                        if(isset($_GET['updated'])){
+                            echo '<div class="alert alert-info alert-dismissable fade show" role="alert">
+                            <strong>Producto!</strong> Actualizado con exito.
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close" >
+                                <span aria-hidden="true"> &times;</span>
+                            </button>
+                        </div>';
+                        }elseif( isset($_GET['deleted'])){
+                            echo '<div class="alert alert-info alert-dismissable fade show" role="alert">
+                            <strong>Producto!</strong> Eliminado con exito.
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close" >
+                                <span aria-hidden="true"> &times;</span>
+                            </button>
+                        </div>';
+                        }elseif( isset($_GET['inserted'])){
+                            echo '<div class="alert alert-info alert-dismissable fade show" role="alert">
+                            <strong>Producto!</strong> Ingresado con exito.
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close" >
+                                <span aria-hidden="true"> &times;</span>
+                            </button>
+                        </div>';
+                        }elseif( isset($_GET['error'])){
+                            echo '<div class="alert alert-info alert-dismissable fade show" role="alert">
+                            <strong>Error de DB</strong> Algo estuvo mal, intentalo de nuevo.
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close" >
+                                <span aria-hidden="true"> &times;</span>
+                            </button>
+                        </div>';
+                        }
 
                     ?>
+                    
                     <div class="table-responsive">
                         <table class="table table-striped table-sm">
                             <thead>
@@ -97,7 +126,7 @@ if( isset($_GET['delete_id']) ){
         <script>
             // JQuery confirmation
             $('.confirmation').on('click', function () {
-                return confirm('Seguro que desea borrar eliminar este PRODUCTO?');
+                return confirm('Seguro que desea eliminar este PRODUCTO?');
             });
         </script>
     </body>
